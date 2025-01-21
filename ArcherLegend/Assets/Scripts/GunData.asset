@@ -16,4 +16,4 @@ MonoBehaviour:
   damage: 25
   startAmmoRemain: 100
   magCapacity: 25
-  fireRate: 0.12
+  fireRate: 0.5

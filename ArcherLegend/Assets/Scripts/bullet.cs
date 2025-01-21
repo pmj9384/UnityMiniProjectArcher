@@ -18,36 +18,37 @@ public class Bullet : MonoBehaviour
         }
 
         pool = objectPool; 
-        Invoke(nameof(ReturnToPool), lifeTime);
+       // Invoke(nameof(ReturnToPool), lifeTime);
     }
-
-    private void OnTriggerEnter(Collider other)
+private void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Enemy"))
     {
-        if (other.CompareTag("Enemy"))
-        {
-            IDamageable damageable = other.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                damageable.OnDamage(damage, transform.position, -transform.forward);
-            }
+        
+     
+        IDamageable damageable = other.GetComponent<IDamageable>();
 
-            ReturnToPool();
-        }
-        else if (!other.CompareTag("Player") && !other.CompareTag("Bullet"))
-        {
-            ReturnToPool();
-        }
+        // if (damageable != null)
+        // {
+        //     damageable.OnDamage(damage, transform.position, -transform.forward);
+        // }
+        ReturnToPool();
+  
+  
     }
+}
+
 
     private void ReturnToPool()
     {
         if (pool != null)
         {
-            pool.Release(gameObject); // Object Pool에 반환
+            pool.Release(gameObject); // 오브젝트 풀에 반환
         }
         else
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);  // 풀 객체가 없다면 삭제
         }
     }
+
 }

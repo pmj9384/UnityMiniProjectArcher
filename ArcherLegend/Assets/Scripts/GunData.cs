@@ -12,7 +12,7 @@ public float damage = 25f;
 
 public int startAmmoRemain = 100;
 public int magCapacity = 25;
-public float fireRate= 0.12f;
+public float fireRate= 1f;
 
 // public float reloadTime = 1f;
 
