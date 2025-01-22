@@ -18,22 +18,25 @@ public class Bullet : MonoBehaviour
         }
 
         pool = objectPool; 
-       // Invoke(nameof(ReturnToPool), lifeTime);
+       Invoke(nameof(ReturnToPool), lifeTime);
     }
 private void OnTriggerEnter(Collider other)
 {
     if (other.CompareTag("Enemy"))
     {
         
-     
+        
+        ReturnToPool();
         IDamageable damageable = other.GetComponent<IDamageable>();
 
-        // if (damageable != null)
-        // {
-        //     damageable.OnDamage(damage, transform.position, -transform.forward);
-        // }
-        ReturnToPool();
+        if (damageable != null)
+        {
+           
+            damageable.OnDamage(damage, transform.position, -transform.forward);
+      
   
+        }
+
   
     }
 }

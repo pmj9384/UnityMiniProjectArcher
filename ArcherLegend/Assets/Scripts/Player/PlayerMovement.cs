@@ -1,67 +1,95 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public Camera mainCamera;
-    public Vector3 cameraFixedPosition = new Vector3(0, 10f, -10f);
-    public Vector3 cameraRotationEuler = new Vector3(45f, 0f, 0f);
-    public VirtualJoyStick joystick;
-
+    public VirtualJoyStick joystick; // 가상 조이스틱
+    public LayerMask targetLayer; // 타겟 레이어
+    public float targetRange = 10f; // 타겟을 찾을 범위
+    private Transform target; // 가장 가까운 타겟 (적)
     private Rigidbody rb;
-    private Animator animator;
-
-    private float rotationSpeed = 10f;
+    private float rotationSpeed = 10f; // 회전 속도
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        mainCamera.transform.position = cameraFixedPosition;
-        mainCamera.transform.rotation = Quaternion.Euler(cameraRotationEuler);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        Vector2 joystickInput = joystick.Input; // 조이스틱 입력 받기
+        // 이동 및 회전 처리
+        HandleMovementAndRotation();
 
-        if (joystickInput.sqrMagnitude > 0.01f) // 입력이 일정 값 이상일 때만 처리
+        // 타겟팅
+        HandleTargeting();
+    }
+
+    private void HandleMovementAndRotation()
+    {
+        Vector2 joystickInput = joystick.Input; // 가상 조이스틱 입력 받기
+
+        if (joystickInput.sqrMagnitude > 0.01f) // 입력이 있을 때
         {
             // 이동 처리
             Vector3 moveInput = new Vector3(joystickInput.x, 0f, joystickInput.y).normalized;
             Vector3 moveDirection = moveInput * speed * Time.deltaTime;
             rb.MovePosition(rb.position + moveDirection);
 
-            // 회전 처리
+            // 이동 중일 때 회전
             RotateTowardsDirection(moveInput);
-
-            animator.SetBool("Walk", true); // 걷기 애니메이션
         }
         else
         {
-            animator.SetBool("Walk", false); // 멈춤 애니메이션
+            // 입력이 없을 때 타겟 방향으로 회전
+            RotateTowardsTarget();
+        }
+    }
+
+    private void HandleTargeting()
+    {
+        Collider[] enemiesInRange = Physics.OverlapSphere(transform.position, targetRange, targetLayer);
+
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (Collider enemy in enemiesInRange)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < closestDistance)
+            {
+                closestDistance = distanceToEnemy;
+                closestEnemy = enemy.transform;
+            }
         }
 
-        // 카메라 고정
-        LockCamera();
+        target = closestEnemy; // 가장 가까운 적을 타겟으로 설정
     }
 
     private void RotateTowardsDirection(Vector3 moveInput)
     {
-        // 목표 회전 계산
-        Quaternion targetRotation = Quaternion.LookRotation(moveInput);
-        // 부드럽게 회전
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        if (moveInput.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveInput);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
-    private void LockCamera()
+    private void RotateTowardsTarget()
     {
-        mainCamera.transform.position = cameraFixedPosition;
-        mainCamera.transform.rotation = Quaternion.Euler(cameraRotationEuler);
+        if (target != null) 
+        {
+            Vector3 directionToTarget = target.position - transform.position;
+            directionToTarget.y = 0f; // y축 방향 회전 제외
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+    }
+
+    public Transform GetTarget()
+    {
+        return target; 
     }
 }
