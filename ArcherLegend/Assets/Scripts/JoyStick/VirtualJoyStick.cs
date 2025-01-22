@@ -19,7 +19,7 @@ public class VirtualJoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     private void Update()
     {
-        Debug.Log(Input);
+       // Debug.Log(Input);
     }
     public void OnPointerDown(PointerEventData eventData)
     {

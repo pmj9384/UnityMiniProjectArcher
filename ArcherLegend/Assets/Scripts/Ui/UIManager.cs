@@ -8,15 +8,15 @@ public class UiManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject pausePanel;  // **추가된 Pause Panel**
 
-    public void UpdateScoreText(int newScore)
-    {
-        scoreText.text = $"SCORE: {newScore}";
-    }
+    // public void UpdateScoreText(int newScore)
+    // {
+    //     scoreText.text = $"SCORE: {newScore}";
+    // }
 
-    public void UpdateWaveText(int wave, int count)
-    {
-        waveText.text = $"Wave: {wave}\nEnemy Left: {count}";
-    }
+    // public void UpdateWaveText(int wave, int count)
+    // {
+    //     waveText.text = $"Wave: {wave}\nEnemy Left: {count}";
+    // }
 
     public void ShowGameOverPanel(bool active)
     {

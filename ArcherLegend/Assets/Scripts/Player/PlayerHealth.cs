@@ -93,10 +93,10 @@ private void OnTriggerEnter(Collider other)
 
     if (other.CompareTag("Enemy"))
     {
-        var zombie = other.GetComponent<Zombie>();  
-        if (zombie != null)
+        var enemy = other.GetComponent<Enemy>();  
+        if (enemy != null)
         {
-            OnDamage(zombie.damage, other.transform.position, Vector3.zero);  
+            OnDamage(enemy.damage, other.transform.position, Vector3.zero);  
             Debug.Log("Player hit by zombie!");
         }
     }
