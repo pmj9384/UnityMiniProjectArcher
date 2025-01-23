@@ -63,4 +63,12 @@ public class ExperienceManager : MonoBehaviour
             }
         }
     }
+
+    public void ResetExperience()
+    {
+        isAllEnemiesDead = false;  // 적이 다시 생성되도록 isAllEnemiesDead를 false로 설정
+    }
+
+
+ 
 }

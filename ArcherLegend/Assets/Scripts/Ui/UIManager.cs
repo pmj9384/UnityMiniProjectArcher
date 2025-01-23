@@ -6,7 +6,8 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI waveText;
     public GameObject gameOverPanel;
-    public GameObject pausePanel;  // **추가된 Pause Panel**
+    public GameObject pausePanel;  
+    public GameObject slotMachinePanel;
 
     // public void UpdateScoreText(int newScore)
     // {
@@ -26,6 +27,18 @@ public class UiManager : MonoBehaviour
     public void ShowGamePausePanel(bool active)
     {
         pausePanel.SetActive(active);  
+    }
+    public void ShowSlotMachinePanel(bool active)
+    {
+        slotMachinePanel.SetActive(active);  
+    }
+
+    public void HideSlotMachinePanel()
+    {
+        if (slotMachinePanel != null)
+        {
+            slotMachinePanel.SetActive(false);  // 슬롯 머신 UI 비활성화
+        }
     }
 
     public void HideGamePausePanel()

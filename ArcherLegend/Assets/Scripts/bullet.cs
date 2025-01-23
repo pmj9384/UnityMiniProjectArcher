@@ -39,6 +39,10 @@ private void OnTriggerEnter(Collider other)
 
   
     }
+    else if (other.CompareTag("Wall"))
+    {
+        ReturnToPool();
+    }
 }
 
 

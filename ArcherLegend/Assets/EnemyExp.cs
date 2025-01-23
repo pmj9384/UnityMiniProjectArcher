@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyExp : MonoBehaviour
 {
-    public int expValue = 10; // 경험치 값
+    public int expValue; // 경험치 값
     public bool isCollectible = false; // 초기 상태는 수집 불가
 
     private void OnTriggerEnter2D(Collider2D collision)
