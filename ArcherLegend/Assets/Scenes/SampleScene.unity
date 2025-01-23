@@ -971,10 +971,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapPrefabs:
   - {fileID: 8124585731698492975, guid: fee064db0ad96d44698265160ff06579, type: 3}
-  - {fileID: 6018480666619331300, guid: e725fe1f374f5804e9e8f31e0041f89f, type: 3}
-  - {fileID: 5012215403578954365, guid: eff5d4975d945754f908cfd89bd65418, type: 3}
-  - {fileID: 8380792522166000738, guid: cf150aa5bbf703a4f85542b68e86d711, type: 3}
-  - {fileID: 4839557870988051977, guid: b462f90ee9de01c4e8fdbe7fc101b389, type: 3}
+  - {fileID: 6018480666619331300, guid: 43bba45282bdd45c0a450e2a302f22be, type: 3}
+  - {fileID: 5012215403578954365, guid: 19f637e25d5c74b3da0d49f1451bbc0b, type: 3}
+  - {fileID: 8380792522166000738, guid: f85bd478dc29f42d591eb859c56d2102, type: 3}
+  - {fileID: 4839557870988051977, guid: bc947df53ec2e45c7a841130229e1830, type: 3}
 --- !u!4 &452850935
 Transform:
   m_ObjectHideFlags: 0
