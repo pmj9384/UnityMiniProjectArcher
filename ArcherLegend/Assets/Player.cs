@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private const string initialPositionKeyY = "InitialPosY";
     private const string initialPositionKeyZ = "InitialPosZ";
 
-    public int[] experienceForLevels = {60, 110, 195, 270, 350, 500}; // 각 레벨에 필요한 경험치
+    public int[] experienceForLevels = {10, 110, 195, 270, 350, 500}; // 각 레벨에 필요한 경험치
     public int maxLevel = 7;
 
     void Awake()

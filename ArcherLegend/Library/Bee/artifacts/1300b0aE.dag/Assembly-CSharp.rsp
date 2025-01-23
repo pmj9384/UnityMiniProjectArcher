@@ -392,6 +392,7 @@
 "Assets/Layer Lab/GUI Pro-CasualGame/Extensions/UIParticle/UIParticleSystem.cs"
 "Assets/Layer Lab/Scripts/PanelControl.cs"
 "Assets/Layer Lab/Scripts/PanelView.cs"
+"Assets/PausePanelManager.cs"
 "Assets/Player.cs"
 "Assets/PlayerHpbarPs.cs"
 "Assets/Scripts/bullet.cs"

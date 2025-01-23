@@ -21,6 +21,7 @@ public class SlotMachineMgr : MonoBehaviour
 
     public List<int> StartList = new List<int>();
     public List<int> ResultIndexList = new List<int>();
+    public List<int> SelectedSkills = new List<int>(); 
     int ItemCnt = 3;
     int[] answer = { 2, 3, 1 };
 
@@ -99,22 +100,48 @@ public class SlotMachineMgr : MonoBehaviour
             Slot[i].interactable = true;
         }
     }
-
-    public void ClickBtn(int index)
+public void ClickBtn(int index)
+{
+    // 버튼 클릭 시 해당 인덱스를 통해 결과 스프라이트 설정
+    DisplayResultImage.sprite = SkillSprite[finalSkillIndices[index]];
+    
+    // PausePanelManager에 선택 결과 전달
+    PausePanelManager pausePanelManager = FindObjectOfType<PausePanelManager>();
+    if (pausePanelManager != null)
     {
-        // 버튼 클릭 시 해당 인덱스를 통해 결과 스프라이트 설정
-        DisplayResultImage.sprite = SkillSprite[finalSkillIndices[index]];
-
-        // 스킬 적용
-        ApplySkillEffect(finalSkillIndices[index]);
-
-        OnSlotSelectionComplete(index);
+        pausePanelManager.Initialize(SkillSprite);
+        
+        // 기존 스킬들을 유지하면서 새로운 스킬만 추가
+        SelectedSkills.Add(finalSkillIndices[index]); // 새로 선택된 스킬 추가
+        pausePanelManager.UpdateSkillIcons(SelectedSkills);  // 업데이트된 SelectedSkills를 전달
     }
+    else
+    {
+        Debug.LogError("PausePanelManager를 찾을 수 없습니다.");
+    }
+
+    // 스킬 적용
+    ApplySkillEffect(finalSkillIndices[index]);
+
+    // 슬롯 선택 완료 처리
+    OnSlotSelectionComplete(index);
+}
+
+
 
     public void OnSlotSelectionComplete(int selectedIndex)
     {
         // 슬롯 머신에서 선택된 결과를 처리
         DisplayResultImage.sprite = SkillSprite[finalSkillIndices[selectedIndex]];
+
+        // // 선택된 스킬을 Pause Panel에 전달
+        // PausePanelManager pausePanelManager = FindObjectOfType<PausePanelManager>();
+        // if (pausePanelManager != null)
+        // {
+        //     pausePanelManager.Initialize(SkillSprite); 
+        //     // **선택된 하나의 스킬만 전달**
+        //     pausePanelManager.UpdateSkillIcons(new List<int> { finalSkillIndices[selectedIndex] }); // 선택된 스킬 아이콘 업데이트
+        // }
 
         // GameManager에 선택된 스킬 전달
         GameManager.Instance.EndSlotMachine();
@@ -122,6 +149,7 @@ public class SlotMachineMgr : MonoBehaviour
         // 필요한 경우 선택된 스킬 데이터를 GameManager에 전달
         // 예: GameManager.Instance.ApplySelectedSkill(selectedSkillData);
     }
+
 
     // 스킬 적용 함수
     private void ApplySkillEffect(int selectedSkillIndex)
